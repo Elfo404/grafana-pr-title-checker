@@ -2,8 +2,8 @@ import { getInput } from "@actions/core";
 import { octokit } from "./oktokit";
 import { context } from "@actions/github";
 
-const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
-const issue_number = parseInt(process.env.GITHUB_REF.split("/")[2]);
+export const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
+export const issue_number = parseInt(process.env.GITHUB_REF.split("/")[2]);
 
 async function getJSON(repoPath) {
   const response = await octokit.repos.getContent({

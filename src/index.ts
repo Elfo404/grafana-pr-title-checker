@@ -1,19 +1,15 @@
 import * as core from "@actions/core";
-import * as github from "@actions/github";
-import { getConfig } from "./config";
+import { context } from "@actions/github";
+import { checkPhrasing } from "./checkPhrasing";
+import { getConfig, issue_number, owner, repo } from "./config";
 import { octokit } from "./oktokit";
-
-const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
-const issue_number = parseInt(process.env.GITHUB_REF.split("/")[2]);
 
 // most @actions toolkit packages have async methods
 async function run() {
   try {
-    const title: string = github.context.payload.pull_request.title;
-    const labels: string[] = github.context.payload.pull_request.labels;
+    const title: string = context.payload.pull_request.title;
+    const labels: string[] = context.payload.pull_request.labels;
     const config = await getConfig();
-
-    core.info(JSON.stringify(config));
 
     // If the PR has a label we want to ignore we skip the checks.
     // if (
@@ -22,7 +18,12 @@ async function run() {
     //   return;
     // }
 
-    addComment();
+    const r = checkPhrasing(title);
+
+    if (r.errors.length > 0) {
+      addComment(r.errors);
+      core.setFailed("Failing CI test");
+    }
 
     // LABEL.name = LABEL.name || "title needs formatting";
     // LABEL.color = LABEL.color || "eee";
@@ -98,12 +99,17 @@ async function removeLabel(name) {
   //   }
 }
 
-async function addComment() {
+async function addComment(errors: string[]) {
   octokit.issues.createComment({
     issue_number,
     owner,
     repo,
-    body: "Hello world ! 👋",
+    body: `Hello! 👋
+    
+    There are a few issues with your PR:
+
+    ${errors.join("\n")}
+    `,
   });
 }
 
