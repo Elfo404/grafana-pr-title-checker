@@ -41,12 +41,12 @@ export const checkPhrasing = (message: string): Error[] => {
 
   if (!["VB", "VBP"].includes(tag)) {
     const error: Error = {
-      message: "Start with an imperative verb.",
+      message: "Start your message with an imperative verb.",
     };
 
     if (tag.charAt(0) === "V") {
       error.suggestions = [
-        `Consider replacing "${word}" with its imperative form.`,
+        `Replace "${word}" with its imperative form.`,
       ];
     }
 
