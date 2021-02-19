@@ -5,7 +5,7 @@ import { context } from "@actions/github";
 export const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
 export const issue_number = parseInt(process.env.GITHUB_REF.split("/")[2]);
 
-async function getJSON(repoPath) {
+async function getJSON(repoPath): Promise<string> {
   const response = await octokit.repos.getContent({
     owner,
     repo,
@@ -13,10 +13,8 @@ async function getJSON(repoPath) {
     ref: context.sha,
   });
 
-  return JSON.parse(
-    // @ts-ignore
-    Buffer.from(response.data.content, response.data.encoding).toString()
-  );
+  // @ts-ignore
+  return Buffer.from(response.data.content, response.data.encoding).toString();
 }
 
 interface Config {
