@@ -3,6 +3,7 @@ import { context } from "@actions/github";
 import { checkPhrasing } from "./checkPhrasing";
 import { getConfig, issue_number, owner, repo } from "./config";
 import { octokit } from "./oktokit";
+import { Error } from "./types";
 
 // most @actions toolkit packages have async methods
 async function run() {
@@ -18,11 +19,10 @@ async function run() {
     //   return;
     // }
 
-    const r = checkPhrasing(title);
-    console.log(config);
+    const errors = checkPhrasing(title);
 
-    if (r.errors.length > 0) {
-      addComment(r.errors);
+    if (errors?.length > 0) {
+      addComment(errors);
       core.setFailed("Failing CI test");
     }
 
@@ -100,17 +100,32 @@ async function removeLabel(name) {
   //   }
 }
 
-async function addComment(errors: string[]) {
+async function addComment(errors: Error[]) {
   octokit.issues.createComment({
     issue_number,
     owner,
     repo,
     body: `Hello! 👋
-    
-    There are a few issues with your PR:
 
-    ${errors.join("\n")}
-    `,
+There are a few issues with your PR:
+
+${errors.map(
+  (error) => `
+### \`${error.message}\`
+
+${
+  error.suggestions?.length > 0
+    ? `
+${error.suggestions.map(
+  (suggestion) => `
+- ${suggestion}`
+)}
+`
+    : ""
+}
+`
+)}
+`,
   });
 }
 
