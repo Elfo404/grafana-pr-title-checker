@@ -19,6 +19,7 @@ async function run() {
     // }
 
     const r = checkPhrasing(title);
+    console.log(r);
 
     if (r.errors.length > 0) {
       addComment(r.errors);
