@@ -106,9 +106,9 @@ async function addComment(errors: Error[]) {
     issue_number,
     owner,
     repo,
-    body: `Hello! 👋
+    body: `Hello! 👋 
 
-There are a few issues with your PR:
+There was at least one issue with your PR:
 
 ${errors.map(
   (error) => `
