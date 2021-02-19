@@ -1,0 +1,26 @@
+{
+  "name": "javascript-action",
+  "description": "JavaScript Action Template",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "scripts": {
+    "prepare": "ncc build src/index.ts"
+  },
+  "keywords": [
+    "GitHub",
+    "Actions",
+    "JavaScript"
+  ],
+  "author": "",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0",
+    "@octokit/action": "^3.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.20.3",
+    "@vercel/ncc": "^0.27.0",
+    "typescript": "^4.1.5"
+  }
+}
