@@ -45,11 +45,11 @@ export const checkPhrasing = (message: string): Error[] => {
     };
 
     if (tag.charAt(0) === "V") {
-      error.suggestions = [
-        `Replace "${word}" with its imperative form.`,
-      ];
+      error.suggestions = [`Replace "${word}" with its imperative form.`];
     }
 
     return [error];
   }
+
+  return [];
 };

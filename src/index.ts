@@ -5,8 +5,9 @@ import { getConfig, issue_number, owner, repo } from "./config";
 import { octokit } from "./oktokit";
 import { Error } from "./types";
 
-// most @actions toolkit packages have async methods
 async function run() {
+  let errors: Error[] = [];
+
   try {
     const title: string = context.payload.pull_request.title;
     // const labels: string[] = context.payload.pull_request.labels;
@@ -19,9 +20,9 @@ async function run() {
     //   return;
     // }
 
-    const errors = checkPhrasing(title);
+    errors = errors.concat(checkPhrasing(title));
 
-    if (errors?.length > 0) {
+    if (errors.length > 0) {
       addComment(errors);
       core.setFailed("Failing CI test");
     }
