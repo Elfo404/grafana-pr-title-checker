@@ -8,8 +8,8 @@ import { octokit } from "./oktokit";
 async function run() {
   try {
     const title: string = context.payload.pull_request.title;
-    const labels: string[] = context.payload.pull_request.labels;
-    const config = await getConfig();
+    // const labels: string[] = context.payload.pull_request.labels;
+    // const config = await getConfig();
 
     // If the PR has a label we want to ignore we skip the checks.
     // if (
