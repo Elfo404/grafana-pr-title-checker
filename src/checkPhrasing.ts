@@ -29,7 +29,10 @@ const removeSubject = (input: string) => {
 
 export const checkPhrasing = (message: string): Error[] => {
   const inputWithoutSubject = removeSubject(message);
-  const lowerCased = inputWithoutSubject.toLocaleLowerCase();
+  // Our NLP implementaition is currently not robust enough
+  // and sometimes it tags capitalized words as wrong part of speech,
+  // we transform everything to lower case to reduce this a bit.
+  const lowerCased = inputWithoutSubject.toLowerCase();
 
   const tagged = getTags(getLemmata(lowerCased));
 

@@ -108,7 +108,7 @@ async function addComment(errors: Error[]) {
     repo,
     body: `Hello! 👋 Thank you for your contribution.
 
-We generate the `CHANGELOG.md` file from PR titles, and it makes it easier for people to read it when the PR titles are consistent:
+We generate the \`CHANGELOG.md\` file from PR titles, and it makes it easier for people to read it when the PR titles are consistent:
 
 ${errors.map(
   (error) => `
@@ -119,7 +119,7 @@ ${
     ? `
 ${error.suggestions.map(
   (suggestion) => `
-- ${suggestion}`
+${suggestion}`
 )}
 `
     : ""
