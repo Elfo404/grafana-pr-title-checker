@@ -106,9 +106,9 @@ async function addComment(errors: Error[]) {
     issue_number,
     owner,
     repo,
-    body: `Hello! 👋 
+    body: `Hello! 👋 Thank you for your contribution.
 
-There was at least one issue with your PR:
+We generate the `CHANGELOG.md` file from PR titles, and it makes it easier for people to read it when the PR titles are consistent:
 
 ${errors.map(
   (error) => `
